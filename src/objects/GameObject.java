@@ -1,5 +1,6 @@
 package objects;
 
+import behaviors.Movement;
 import javax.media.j3d.*;
 import javax.vecmath.Vector3f;
 
@@ -7,6 +8,7 @@ public class GameObject extends TransformGroup {
     public TransformGroup gameObject, position, rotation, scale, bounds;
     public String name, tag, layer;
     public Vector3f origin;
+    public Movement movement;
     
     public GameObject() {
         bounds = new TransformGroup();

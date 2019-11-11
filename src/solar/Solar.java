@@ -55,7 +55,7 @@ public class Solar extends JPanel {
 
         Viewer viewer = universe.getViewer();
         View view = viewer.getView();
-        view.setBackClipDistance(300.0f);
+        view.setBackClipDistance(800.0f);
         view.setSceneAntialiasingEnable(true);
         view.setDepthBufferFreezeTransparent(true);
         view.setTransparencySortingPolicy(View.PERSPECTIVE_PROJECTION);
@@ -65,6 +65,8 @@ public class Solar extends JPanel {
         view.setFieldOfView(1.5f);
         
         OrbitCamera camera = new OrbitCamera(universe, canvas, 4.0f, 3.5f);
+        
+        camera.setOrbit(new Point3d(5.1f, 0, 0f));
         
         universe.getViewingPlatform().setNominalViewingTransform();
         Transform3D viewPosTransform = new Transform3D();
@@ -86,8 +88,15 @@ public class Solar extends JPanel {
         Appearance earthAppearance = new Appearance();
         earthAppearance.setTexture(new TextureLoader("./res/earth.png", null).getTexture());
         
-        planetGroup.addChild(new Planet(new Vector3f(0, 0, 0.5f), new Vector3f(0.0f, 0.0f, 0.0f), 0.25f, "./res/earth.png", planetGroup, "Earth", false));
-
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 8.7f), new Vector3f(0.0f, 0.0f, 0.0f), 0.267f, "./res/mercury.png", planetGroup, "Mercury", false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 16.2f), new Vector3f(0.0f, 0.0f, 0.0f), 0.664f, "./res/venus.png", planetGroup, "Venus", false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 22.4f), new Vector3f(0.0f, 0.0f, 0.0f), 0.699f, "./res/earth.png", planetGroup, "Earth", false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 34.0f), new Vector3f(0.0f, 0.0f, 0.0f), 0.371f, "./res/mars.png", planetGroup, "Mars", false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 116.3f), new Vector3f(0.0f, 0.0f, 0.0f), 7.658f, "./res/jupiter.png", planetGroup, "Jupiter", false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 213.6f), new Vector3f(0.0f, 0.0f, 0.0f), 6.391f, "./res/saturn.png", planetGroup, "Saturn", false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 429.1f), new Vector3f(0.0f, 0.0f, 0.0f), 2.576f, "./res/uranus.png", planetGroup, "Uranus", false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 673.2f), new Vector3f(0.0f, 0.0f, 0.0f), 2.494f, "./res/Neptune.png", planetGroup, "Neptune", false));
+        
         rootGroup.addChild(planetGroup);
         rootGroup.compile();
     }

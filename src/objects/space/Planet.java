@@ -1,5 +1,6 @@
 package objects.space;
 
+import behaviors.Movement;
 import com.sun.j3d.utils.geometry.*;
 import com.sun.j3d.utils.image.TextureLoader;
 import javax.media.j3d.*;
@@ -24,6 +25,9 @@ public class Planet extends GameObject {
         origin = pos;
         setPickable(true);
         setPosition(pos);
+        
+        movement = new Movement(this, new Vector3f(0.1f, 0.0f, 0.0f));
+        branchGroup.addChild(movement);
         
         branchGroup.addChild(gameObject);
     }

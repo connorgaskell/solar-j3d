@@ -19,8 +19,8 @@ public class OrbitCamera {
         viewingPlatform.setViewPlatformBehavior(orbitBehavior);
     }
     
-    public void setOrbit() {
-        orbitBehavior.getRotationCenter(new Point3d(0.0f, 15.5f, 0.0f));
+    public void setOrbit(Point3d pos) {
+        orbitBehavior.setRotationCenter(pos);
     }
     
 }
