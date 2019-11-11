@@ -1,14 +1,19 @@
 package solar;
 
+import com.sun.j3d.utils.geometry.*;
+import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.*;
 import java.awt.*;
 import java.util.*;
-import javafx.scene.shape.*;
 import javax.media.j3d.*;
 import javax.swing.*;
+import javax.vecmath.*;
+import objects.camera.OrbitCamera;
+import objects.lights.Ambient;
+import objects.space.Planet;
 
 public class Solar extends JPanel {
-    private BranchGroup rootGroup, planetGroup, skyGroup, fogGroup, behaviourGroup;
+    private BranchGroup rootGroup, planetGroup, starGroup, fogGroup, behaviourGroup;
     public static ArrayList<Sphere> planets = new ArrayList<>();
     public static double mouseX = 0, mouseY = 0;
     
@@ -21,6 +26,7 @@ public class Solar extends JPanel {
         Canvas3D canvas = new Canvas3D(config) {
             Graphics2D g = this.getGraphics2D();
 
+            @Override
             public void postRender() {
                 Dimension dimensions = this.getSize();
                 double screenWidth = dimensions.getWidth();
@@ -28,8 +34,7 @@ public class Solar extends JPanel {
 
                 g.setColor(Color.WHITE);
 
-                g.drawString("-- INFORMATION --",(int)(screenWidth / 2) - 45, (int)(screenHeight) - 20);
-                g.drawString("HIT BALL - RIGHT MOUSE   |   ROTATE CAMERA - LEFT MOUSE   |   ZOOM - SCROLL MIDDLE MOUSE   |   RESTART - 'R' KEY",(int)(screenWidth / 2) - 350, (int)(screenHeight) - 5);
+                g.drawString("-- THE SOLAR SYSTEM --",(int)(screenWidth / 2) - 45, (int)(screenHeight) - 20);
 
                 this.getGraphics2D().flush(false);
                 revalidate();
@@ -44,8 +49,10 @@ public class Solar extends JPanel {
         fogGroup = new BranchGroup();
         behaviourGroup = new BranchGroup();
         
-        add("Center", canvas);
+        renderPlanets();
         
+        add("Center", canvas);
+
         Viewer viewer = universe.getViewer();
         View view = viewer.getView();
         view.setBackClipDistance(300.0f);
@@ -57,5 +64,49 @@ public class Solar extends JPanel {
         view.setWindowEyepointPolicy(View.RELATIVE_TO_FIELD_OF_VIEW);
         view.setFieldOfView(1.5f);
         
+        OrbitCamera camera = new OrbitCamera(universe, canvas, 4.0f, 3.5f);
+        
+        universe.getViewingPlatform().setNominalViewingTransform();
+        Transform3D viewPosTransform = new Transform3D();
+        viewPosTransform.set(new Vector3f(0.0f, 0.0f, 6.0f));
+        Transform3D viewRotTransform = new Transform3D();
+        viewRotTransform.setRotation(new Quat4d(1.0f, 0.0f, 0.0f, -1.0f));
+        viewRotTransform.mul(viewPosTransform);
+        universe.getViewingPlatform().getViewPlatformTransform().setTransform(viewRotTransform);
+        universe.addBranchGraph(rootGroup);
+    }
+    
+    public void renderPlanets() {
+        rootGroup = new BranchGroup();
+        planetGroup = new BranchGroup();
+        
+        planetGroup.addChild(new Ambient());
+        rootGroup.addChild(renderStars());
+        
+        Appearance earthAppearance = new Appearance();
+        earthAppearance.setTexture(new TextureLoader("./res/earth.png", null).getTexture());
+        
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 0.5f), new Vector3f(0.0f, 0.0f, 0.0f), 0.25f, "./res/earth.png", planetGroup, "Earth", false));
+
+        rootGroup.addChild(planetGroup);
+        rootGroup.compile();
+    }
+    
+    public Background renderStars() {
+        starGroup = new BranchGroup();
+        Background starBg = new Background();
+        starBg.setApplicationBounds(new BoundingSphere(new Point3d(0, 0, 0), 1e100));
+        
+        Appearance starAppearance = new Appearance();
+        
+        // Resource: https://www.solarsystemscope.com/textures/download/8k_stars_milky_way.jpg
+        starAppearance.setTexture(new TextureLoader("./res/stars.png", null).getTexture());
+        
+        Sphere starSphere = new Sphere(1.0f, Sphere.GENERATE_NORMALS | Sphere.GENERATE_NORMALS_INWARD | Sphere.GENERATE_TEXTURE_COORDS, 40, starAppearance);
+        
+        starGroup.addChild(starSphere);
+        starBg.setGeometry(starGroup);
+        
+        return starBg;
     }
 }
