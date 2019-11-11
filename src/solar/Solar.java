@@ -63,7 +63,6 @@ public final class Solar extends JPanel {
         view.setProjectionPolicy(View.PERSPECTIVE_PROJECTION);
         view.setWindowEyepointPolicy(View.RELATIVE_TO_FIELD_OF_VIEW);
         view.setFieldOfView(1.5f);
-        //view.setMinimumFrameCycleTime(60);
         
         OrbitCamera camera = new OrbitCamera(universe, canvas, 4.0f, 3.5f);
         
@@ -92,8 +91,10 @@ public final class Solar extends JPanel {
         Planet sun = new Planet(new Vector3f(0, 0, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), 4.267f, "./res/sun.png", planetGroup, "Sun", null, 0, 0.0f, false);
         Planet mercury = new Planet(new Vector3f(0, 0, 10.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.267f, "./res/mercury.png", planetGroup, "Mercury", sun, 10, 0.4787f, false);
         Planet venus = new Planet(new Vector3f(0, 0, 20.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.664f, "./res/venus.png", planetGroup, "Venus", sun, 20, 0.3502f, false);
-        Planet earth = new Planet(new Vector3f(0, 0, 30.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.699f, "./res/earth.png", planetGroup, "Earth", sun, 30, 0.2978f, false);
+        Planet earth = new Planet(new Vector3f(0, 0, 30.0f), new Vector3f((float)(23.3f * (Math.PI / 180)), 0.0f, 0.0f), 1.699f, "./res/earth.png", planetGroup, "Earth", sun, 30, 0.2978f, false);
         Planet moon = new Planet(new Vector3f(0, 0, 30.0f), new Vector3f(0.0f, 0.0f, 0.0f), 0.699f, "./res/moon.png", planetGroup, "Moon", earth, 3, 1.2678f, false);
+        
+        
         
         Planet mars = new Planet(new Vector3f(0, 0, 40.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.371f, "./res/mars.png", planetGroup, "Mars", sun, 40, 0.24077f, false);
         Planet jupiter = new Planet(new Vector3f(0, 0, 50.0f), new Vector3f(0.0f, 0.0f, 0.0f), 3.658f, "./res/jupiter.png", planetGroup, "Jupiter", sun, 50, 0.1307f, false);

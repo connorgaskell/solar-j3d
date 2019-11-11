@@ -12,15 +12,13 @@ public class Movement extends Behavior {
     private WakeupOr wakeupOr;
     
     private final Planet gameObject;
-    private final Vector3f positionVector;
-    private final Vector3f velocity;
     private Vector3f rotationVelocity;
     
     private float angle = 0;
     private float radius;
     
     private void moveObject() {        
-        angle += 1  * gameObject.getSpeed();
+        angle += 1 * gameObject.getSpeed();
         
         float rad = (float)(angle * (Math.PI / 180));
         Vector3f orbit = gameObject.getOrbitCentre() != null ? gameObject.getOrbitCentre().getPosition() : new Vector3f(0, 0, 0);
@@ -34,8 +32,6 @@ public class Movement extends Behavior {
     
     public Movement(Planet gameObject, Vector3f velocity) {
         this.gameObject = gameObject;
-        this.positionVector = gameObject.getPosition();
-        this.velocity = velocity;
         this.radius = gameObject.getRadius();
         
         setSchedulingBounds(new BoundingSphere(new Point3d(0, 0, 0), 1e100));
@@ -53,11 +49,11 @@ public class Movement extends Behavior {
 
     @Override
     public void processStimulus(Enumeration criteria) {
-        WakeupCriterion wakeupCriterion = (WakeupCriterion)criteria.nextElement();
-        
-        if(wakeupCriterion instanceof WakeupOnElapsedFrames) {
+        WakeupCriterion criterion = (WakeupCriterion)criteria.nextElement();
+
+        if(criterion instanceof WakeupOnElapsedFrames) {
             moveObject();
-        } else if(wakeupCriterion instanceof WakeupOnElapsedTime) {
+        } else if(criterion instanceof WakeupOnElapsedTime) {
             //moveObject();
         }
         
