@@ -12,8 +12,9 @@ public class Planet extends GameObject {
     public Shape3D planetObject;
     private final float radius;
     private final float speed;
+    private final Planet centre;
     
-    public Planet(Vector3f pos, Vector3f rot, float scale, String material, BranchGroup branchGroup, String name, float speed, boolean isStatic) {
+    public Planet(Vector3f pos, Vector3f rot, float scale, String material, BranchGroup branchGroup, String name, Planet orbitCentre, float orbitRadius, float speed, boolean isStatic) {
         planetObject = new Sphere(scale, Sphere.GENERATE_NORMALS | Sphere.GENERATE_TEXTURE_COORDS, 100).getShape();
         bounds.addChild(planetObject.getParent());
         
@@ -28,8 +29,9 @@ public class Planet extends GameObject {
         setPickable(true);
         setPosition(pos);
         
-        radius = pos.z;
+        radius = orbitRadius;
         this.speed = speed;
+        this.centre = orbitCentre;
         
         movement = new Movement(this, new Vector3f(0.1f, 0.0f, 0.0f));
         branchGroup.addChild(movement);
@@ -43,6 +45,10 @@ public class Planet extends GameObject {
     
     public float getSpeed() {
         return speed;
+    }
+    
+    public Planet getOrbitCentre() {
+        return centre;
     }
     
 }

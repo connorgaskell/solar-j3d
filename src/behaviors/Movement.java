@@ -16,28 +16,27 @@ public class Movement extends Behavior {
     private final Vector3f velocity;
     private Vector3f rotationVelocity;
     
-    private float x, z;
     private float angle = 0;
+    private float radius;
     
-    private void moveObject() {
-        Transform3D transform3D = gameObject.getTransform(gameObject.position);
-        
-        float radius = gameObject.getRadius();
+    private void moveObject() {        
         angle += 1  * gameObject.getSpeed();
         
         float rad = (float)(angle * (Math.PI / 180));
-        x = (float)(radius * Math.cos(rad));
-        z = (float)(radius * Math.sin(rad));
-
-        System.out.println(new Vector3f(x, 0, z));
-
-        gameObject.setPosition(new Vector3f(x, 0, z));
+        Vector3f orbit = gameObject.getOrbitCentre() != null ? gameObject.getOrbitCentre().getPosition() : new Vector3f(0, 0, 0);
+        
+        gameObject.setPosition(new Vector3f(
+                (float)(radius * Math.cos(rad)) + orbit.x, 
+                0, 
+                (float)(radius * Math.sin(rad)) + orbit.z
+        ));
     }
     
     public Movement(Planet gameObject, Vector3f velocity) {
         this.gameObject = gameObject;
         this.positionVector = gameObject.getPosition();
         this.velocity = velocity;
+        this.radius = gameObject.getRadius();
         
         setSchedulingBounds(new BoundingSphere(new Point3d(0, 0, 0), 1e100));
     }
