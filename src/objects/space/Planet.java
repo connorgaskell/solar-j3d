@@ -10,8 +10,10 @@ import objects.GameObject;
 public class Planet extends GameObject {
     
     public Shape3D planetObject;
+    private final float radius;
+    private final float speed;
     
-    public Planet(Vector3f pos, Vector3f rot, float scale, String material, BranchGroup branchGroup, String name, boolean isStatic) {
+    public Planet(Vector3f pos, Vector3f rot, float scale, String material, BranchGroup branchGroup, String name, float speed, boolean isStatic) {
         planetObject = new Sphere(scale, Sphere.GENERATE_NORMALS | Sphere.GENERATE_TEXTURE_COORDS, 100).getShape();
         bounds.addChild(planetObject.getParent());
         
@@ -26,10 +28,21 @@ public class Planet extends GameObject {
         setPickable(true);
         setPosition(pos);
         
+        radius = pos.z;
+        this.speed = speed;
+        
         movement = new Movement(this, new Vector3f(0.1f, 0.0f, 0.0f));
         branchGroup.addChild(movement);
         
         branchGroup.addChild(gameObject);
+    }
+    
+    public float getRadius() {
+        return radius;
+    }
+    
+    public float getSpeed() {
+        return speed;
     }
     
 }

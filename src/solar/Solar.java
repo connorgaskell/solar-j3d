@@ -12,7 +12,7 @@ import objects.camera.OrbitCamera;
 import objects.lights.Ambient;
 import objects.space.Planet;
 
-public class Solar extends JPanel {
+public final class Solar extends JPanel {
     private BranchGroup rootGroup, planetGroup, starGroup, fogGroup, behaviourGroup;
     public static ArrayList<Sphere> planets = new ArrayList<>();
     public static double mouseX = 0, mouseY = 0;
@@ -55,7 +55,7 @@ public class Solar extends JPanel {
 
         Viewer viewer = universe.getViewer();
         View view = viewer.getView();
-        view.setBackClipDistance(800.0f);
+        view.setBackClipDistance(16000.0f);
         view.setSceneAntialiasingEnable(true);
         view.setDepthBufferFreezeTransparent(true);
         view.setTransparencySortingPolicy(View.PERSPECTIVE_PROJECTION);
@@ -63,10 +63,11 @@ public class Solar extends JPanel {
         view.setProjectionPolicy(View.PERSPECTIVE_PROJECTION);
         view.setWindowEyepointPolicy(View.RELATIVE_TO_FIELD_OF_VIEW);
         view.setFieldOfView(1.5f);
+        //view.setMinimumFrameCycleTime(60);
         
         OrbitCamera camera = new OrbitCamera(universe, canvas, 4.0f, 3.5f);
         
-        camera.setOrbit(new Point3d(5.1f, 0, 0f));
+        camera.setOrbit(new Point3d(0f, 0f, 0f));
         
         universe.getViewingPlatform().setNominalViewingTransform();
         Transform3D viewPosTransform = new Transform3D();
@@ -88,14 +89,18 @@ public class Solar extends JPanel {
         Appearance earthAppearance = new Appearance();
         earthAppearance.setTexture(new TextureLoader("./res/earth.png", null).getTexture());
         
-        planetGroup.addChild(new Planet(new Vector3f(0, 0, 8.7f), new Vector3f(0.0f, 0.0f, 0.0f), 0.267f, "./res/mercury.png", planetGroup, "Mercury", false));
-        planetGroup.addChild(new Planet(new Vector3f(0, 0, 16.2f), new Vector3f(0.0f, 0.0f, 0.0f), 0.664f, "./res/venus.png", planetGroup, "Venus", false));
-        planetGroup.addChild(new Planet(new Vector3f(0, 0, 22.4f), new Vector3f(0.0f, 0.0f, 0.0f), 0.699f, "./res/earth.png", planetGroup, "Earth", false));
-        planetGroup.addChild(new Planet(new Vector3f(0, 0, 34.0f), new Vector3f(0.0f, 0.0f, 0.0f), 0.371f, "./res/mars.png", planetGroup, "Mars", false));
-        planetGroup.addChild(new Planet(new Vector3f(0, 0, 116.3f), new Vector3f(0.0f, 0.0f, 0.0f), 7.658f, "./res/jupiter.png", planetGroup, "Jupiter", false));
-        planetGroup.addChild(new Planet(new Vector3f(0, 0, 213.6f), new Vector3f(0.0f, 0.0f, 0.0f), 6.391f, "./res/saturn.png", planetGroup, "Saturn", false));
-        planetGroup.addChild(new Planet(new Vector3f(0, 0, 429.1f), new Vector3f(0.0f, 0.0f, 0.0f), 2.576f, "./res/uranus.png", planetGroup, "Uranus", false));
-        planetGroup.addChild(new Planet(new Vector3f(0, 0, 673.2f), new Vector3f(0.0f, 0.0f, 0.0f), 2.494f, "./res/Neptune.png", planetGroup, "Neptune", false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 10.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.267f, "./res/mercury.png", planetGroup, "Mercury", 0.4787f, false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 20.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.664f, "./res/venus.png", planetGroup, "Venus", 0.3502f, false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 30.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.699f, "./res/earth.png", planetGroup, "Earth", 0.2978f, false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 40.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.371f, "./res/mars.png", planetGroup, "Mars", 0.24077f, false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 50.0f), new Vector3f(0.0f, 0.0f, 0.0f), 3.658f, "./res/jupiter.png", planetGroup, "Jupiter", 0.1307f, false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 60.0f), new Vector3f(0.0f, 0.0f, 0.0f), 3.391f, "./res/saturn.png", planetGroup, "Saturn", 0.0969f, false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 70.0f), new Vector3f(0.0f, 0.0f, 0.0f), 2.576f, "./res/uranus.png", planetGroup, "Uranus", 0.0681f, false));
+        planetGroup.addChild(new Planet(new Vector3f(0, 0, 80.0f), new Vector3f(0.0f, 0.0f, 0.0f), 2.494f, "./res/Neptune.png", planetGroup, "Neptune", 0.0543f, false));
+        
+        for(int i = 0; i <= 8; i++) {
+            drawOrbitLines(10.0f * i, 80);
+        }
         
         rootGroup.addChild(planetGroup);
         rootGroup.compile();
@@ -117,5 +122,20 @@ public class Solar extends JPanel {
         starBg.setGeometry(starGroup);
         
         return starBg;
+    }
+    
+    private void drawOrbitLines(float radius, int numLines) {
+        LineStripArray line = new LineStripArray(numLines + 1, GeometryArray.COORDINATES, new int[] { numLines + 1 });
+        line.setCoordinate(0, new Point3f(radius, 0.0f, 0.0f));
+        
+        Point3f pt = new Point3f();
+        for(int i = 1; i < numLines; i++) {
+            pt.x = (float)(radius * Math.cos(i * Math.PI / (numLines / 2)));
+            pt.z = (float)(radius * Math.sin(i * Math.PI / (numLines / 2)));
+            line.setCoordinate(i, pt);
+        }
+        
+        line.setCoordinate(numLines, new Point3f(radius, 0.0f, 0.0f));
+        rootGroup.addChild(new Shape3D(line));
     }
 }
