@@ -9,7 +9,6 @@ import javax.media.j3d.WakeupOnElapsedTime;
 import javax.media.j3d.WakeupOr;
 import javax.vecmath.Point3d;
 import javax.vecmath.Quat4d;
-import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 import objects.space.Planet;
 

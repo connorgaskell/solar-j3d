@@ -92,7 +92,7 @@ public final class Solar extends JPanel {
         Planet mercury = new Planet(new Vector3f(0, 0, 10.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.267f, "./res/mercury.png", planetGroup, "Mercury", sun, 10, 0.4787f, new Vector3f(0.0f, 0.0001083f, 0.0f), false);
         Planet venus = new Planet(new Vector3f(0, 0, 20.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.664f, "./res/venus.png", planetGroup, "Venus", sun, 20, 0.3502f, new Vector3f(0.0f, 0.0000652f, 0.0f), false);
         Planet earth = new Planet(new Vector3f(0, 0, 30.0f), new Vector3f((float)(23.3f * (Math.PI / 180)), 0.0f, 0.0f), 1.699f, "./res/earth.png", planetGroup, "Earth", sun, 30, 0.2978f, new Vector3f(0.0f, 0.01674f, 0.0f), false);
-        Planet moon = new Planet(new Vector3f(0, 0, 30.0f), new Vector3f(0.0f, 0.0f, 0.0f), 0.699f, "./res/moon.png", planetGroup, "Moon", earth, 3, 1.2678f, new Vector3f(0.0f, 0.0f, 0.0f), false);
+        Planet moon = new Planet(new Vector3f(0, 0, 30.0f), new Vector3f(0.0f, 0.0f, 0.0f), 0.699f, "./res/moon.png", planetGroup, "Moon", earth, 3, 1.2678f, new Vector3f(0.0f, -0.0f, 0.0f), false);
 
         Planet mars = new Planet(new Vector3f(0, 0, 40.0f), new Vector3f(0.0f, 0.0f, 0.0f), 1.371f, "./res/mars.png", planetGroup, "Mars", sun, 40, 0.24077f, new Vector3f(0.0f, 0.00866f, 0.0f), false);
         Planet jupiter = new Planet(new Vector3f(0, 0, 50.0f), new Vector3f(0.0f, 0.0f, 0.0f), 3.658f, "./res/jupiter.png", planetGroup, "Jupiter", sun, 50, 0.1307f, new Vector3f(0.0f, 0.045583f, 0.0f), false);
