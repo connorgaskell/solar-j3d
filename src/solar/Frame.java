@@ -8,8 +8,8 @@ public class Frame extends JFrame {
     /*
      * Default frame dimensions
      */
-    private int frameWidth = 650;
-    private int frameHeight = 500;
+    private final int frameWidth = 650;
+    private final int frameHeight = 500;
     
     public Frame() {
         // Some code that's required for Java3D to work within a JFrame.

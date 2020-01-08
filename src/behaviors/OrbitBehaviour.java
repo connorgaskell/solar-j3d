@@ -3,10 +3,9 @@ package behaviors;
 import java.util.*;
 import javax.media.j3d.*;
 import javax.vecmath.*;
-import objects.GameObject;
 import objects.space.Planet;
 
-public class Movement extends Behavior {
+public class OrbitBehaviour extends Behavior {
 
     private WakeupCriterion[] wakeupCriterion;
     private WakeupOr wakeupOr;
@@ -18,7 +17,7 @@ public class Movement extends Behavior {
     private float radius;
     
     private void moveObject() {        
-        angle += 1 * gameObject.getSpeed();
+        angle += 1f * gameObject.getSpeed();
         
         float rad = (float)(angle * (Math.PI / 180));
         Vector3f orbit = gameObject.getOrbitCentre() != null ? gameObject.getOrbitCentre().getPosition() : new Vector3f(0, 0, 0);
@@ -30,7 +29,7 @@ public class Movement extends Behavior {
         ));
     }
     
-    public Movement(Planet gameObject, Vector3f velocity) {
+    public OrbitBehaviour(Planet gameObject, Vector3f velocity) {
         this.gameObject = gameObject;
         this.radius = gameObject.getRadius();
         

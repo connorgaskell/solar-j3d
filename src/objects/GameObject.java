@@ -1,14 +1,13 @@
 package objects;
 
-import behaviors.Movement;
 import javax.media.j3d.*;
+import javax.vecmath.Quat4d;
 import javax.vecmath.Vector3f;
 
 public class GameObject extends TransformGroup {
     public TransformGroup gameObject, position, rotation, scale, bounds;
     public String name, tag, layer;
     public Vector3f origin;
-    public Movement movement;
     
     public GameObject() {
         bounds = new TransformGroup();
@@ -49,6 +48,16 @@ public class GameObject extends TransformGroup {
         position.setTransform(transform3D);
     }
     
+    public void setRotation(Quat4d rot) {
+        Transform3D transform3D = getTransform(rotation);
+        Transform3D transform3D1 = new Transform3D();
+
+        transform3D1.setRotation(rot);
+        transform3D.mul(transform3D1);
+
+        rotation.setTransform(transform3D);
+    }
+    
     public Transform3D getTransform(TransformGroup transformGroup) {
         Transform3D transform3D = new Transform3D();
         transformGroup.getTransform(transform3D);
@@ -61,7 +70,7 @@ public class GameObject extends TransformGroup {
         transform3D.get(pos);
         return pos;
     }
-    
+
     public Vector3f getRotation() {
         Transform3D transform3D = getTransform(rotation);
         Vector3f rot = new Vector3f();
