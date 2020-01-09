@@ -64,7 +64,7 @@ public final class Solar extends JPanel {
         view.setWindowEyepointPolicy(View.RELATIVE_TO_FIELD_OF_VIEW);
         view.setFieldOfView(1.5f);
         
-        OrbitCamera camera = new OrbitCamera(universe, canvas, 4.0f, 3.5f);
+        OrbitCamera camera = new OrbitCamera(universe, canvas, 12.0f, Settings.camRotationSpeed);
         
         camera.setOrbit(new Point3d(0f, 0f, 0f));
         

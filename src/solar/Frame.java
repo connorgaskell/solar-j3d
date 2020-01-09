@@ -21,7 +21,7 @@ public class Frame extends JFrame {
         setLayout(new BorderLayout());
 
         // Set the title of the application
-        setTitle("JSolar 3D");
+        setTitle(Settings.APP_NAME);
 
         // Set the minimum size of the window
         setMinimumSize(new Dimension(frameWidth, frameHeight));

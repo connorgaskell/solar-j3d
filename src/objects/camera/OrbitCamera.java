@@ -15,6 +15,7 @@ public class OrbitCamera {
         orbitBehavior.setRotFactors(rotSpeed, rotSpeed);
         orbitBehavior.setZoomFactor(0.1f);
         orbitBehavior.setSchedulingBounds(new BoundingSphere(new Point3d(0, 0, 0), 1e100));
+        orbitBehavior.setProportionalZoom(true);
         
         ViewingPlatform viewingPlatform = universe.getViewingPlatform();
         viewingPlatform.setViewPlatformBehavior(orbitBehavior);

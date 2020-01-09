@@ -11,10 +11,9 @@ public class OrbitBehaviour extends Behavior {
     private WakeupOr wakeupOr;
     
     private final Planet gameObject;
-    private Vector3f rotationVelocity;
     
     private float angle = 0;
-    private float radius;
+    private final float radius;
     
     private void moveObject() {        
         angle += 1f * gameObject.getSpeed();
